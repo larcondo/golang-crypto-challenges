@@ -21,3 +21,9 @@ func isValidMessage(msg string) bool {
 
 	return true
 }
+
+func check(e error) {
+	if e != nil {
+		panic(e)
+	}
+}
