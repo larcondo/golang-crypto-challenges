@@ -15,7 +15,7 @@ func readFile(filepath string) (string, error) {
 		return "", errors.New("empty file path")
 	}
 
-	data, err := os.ReadFile("./4.txt")
+	data, err := os.ReadFile(filepath)
 	if err != nil {
 		return "", err
 	}

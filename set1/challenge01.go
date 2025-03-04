@@ -12,6 +12,6 @@ func hexTobase64(input string) string {
 	if err != nil {
 		log.Fatal(err)
 	}
-	encoded := b64.URLEncoding.EncodeToString(decodedHex)
+	encoded := b64.StdEncoding.EncodeToString(decodedHex)
 	return encoded
 }
