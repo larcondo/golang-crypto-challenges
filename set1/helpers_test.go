@@ -3,25 +3,22 @@ package set1_challenges
 import "testing"
 
 func TestIsValidMessage(t *testing.T) {
-	messages := []string{
-		"Hola mundo",
-		"Cooking MC's like pound bacon.",
-		"MICHAEL.",
+	tests := []struct {
+		text string
+		want bool
+	}{
+		{text: "Hola mundo", want: true},
+		{text: "Cooking MC's like pound bacon.", want: true},
+		{text: "MICHAEL.", want: true},
+		{text: "<^shgDSA#%", want: false},
+		{text: "marshal01", want: false},
+		{text: "Hola, mundo!?", want: true},
 	}
 
-	if !isValidMessage(messages[0]) {
-		t.Fatalf("El mensaje %s no es válido", messages[0])
+	for _, v := range tests {
+		res := isValidMessage(v.text)
+		if res != v.want {
+			t.Fatalf("isVM(%v) = %v, want %v\n", v.text, res, v.want)
+		}
 	}
-	if !isValidMessage(messages[1]) {
-		t.Fatalf("El mensaje %s no es válido", messages[0])
-	}
-	if !isValidMessage(messages[2]) {
-		t.Fatalf("El mensaje %s no es válido", messages[0])
-	}
-
-	wrongMsg := "<^shgDSA#%"
-	if isValidMessage(wrongMsg) {
-		t.Fatalf("El mensaje %s fue considerado válido cuando no lo es", wrongMsg)
-	}
-
 }
