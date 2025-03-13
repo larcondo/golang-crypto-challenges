@@ -2,6 +2,7 @@ package set1_challenges
 
 import (
 	"regexp"
+	"testing"
 )
 
 func isValidMessage(msg string) bool {
@@ -13,5 +14,11 @@ func isValidMessage(msg string) bool {
 func check(e error) {
 	if e != nil {
 		panic(e)
+	}
+}
+
+func ResolveErr(t *testing.T, e error) {
+	if e != nil {
+		t.Fatal(e)
 	}
 }
