@@ -4,6 +4,16 @@
 | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Hilo de reddit | [What are some good projects in Go for an experienced dev?](https://www.reddit.com/r/golang/comments/17vdy90/what_are_some_good_projects_in_go_for_an/) |
 
+### Set 1:
+
+- [Challenge 1 - Convert hex to base64](#challenge-1-convert-hex-to-base64)
+- [Challenge 2 - Fixed XOR](#challenge-2-fixed-xor)
+- [Challenge 3 - Single-byte XOR](#challenge-3-single-byte-xor-cipher)
+- [Challenge 4 - Detect single-character XOR](#challenge-4-detect-single-character-xor)
+- [Challenge 5 - Implement repeating-key XOR](#challenge-5-implement-repeating-key-xor)
+- [Challenge 6 - Break repeating-key XOR](#challenge-6-break-repeating-key-xor)
+- [Challenge 7 - AES in ECB mode](#challenge-7-aes-in-ecb-mode)
+
 # Set 1
 
 ## `Challenge 1` Convert hex to base64
@@ -93,3 +103,47 @@ a282b2f20430a652e2c652a3124333a653e2b2027630c692b20283165286326302e27282f
 ```
 
 Encrypt a bunch of stuff using your repeating-key XOR function. Encrypt your mail. Encrypt your password file. Your .sig file. Get a feel for it. I promise, we aren't wasting your time with this.
+
+## `Challenge 6` Break repeating-key XOR
+
+> **It is officially on, now.**  
+> This challenge isn't conceptually hard, but it involves actual error-prone coding. The other challenges in this set are there to bring you up to speed. This one is there to **qualify** you. If you can do this one, you're probably just fine up to Set 6.
+
+[There's a file here.](https://cryptopals.com/static/challenge-data/6.txt) It's been base64'd after being encrypted with repeating-key XOR.
+
+Decrypt it.
+
+Here's how:
+
+1. Let KEYSIZE be the guessed length of the key; try values from 2 to (say) 40.
+2. Write a function to compute the edit distance/Hamming distance between two strings. _The Hamming distance is just the number of differing bits._ The distance between: `this is a test` and `wokka wokka!!!` is **37**. _Make sure your code agrees before you proceed._
+
+3. For each KEYSIZE, take the _first_ KEYSIZE worth of bytes, and the _second_ KEYSIZE worth of bytes, and find the edit distance between them. Normalize this result by dividing by KEYSIZE.
+
+4. The KEYSIZE with the smallest normalized edit distance is probably the key. You could proceed perhaps with the smallest 2-3 KEYSIZE values. Or take 4 KEYSIZE blocks instead of 2 and average the distances.
+5. Now that you probably know the KEYSIZE: break the ciphertext into blocks of KEYSIZE length.
+6. Now transpose the blocks: make a block that is the first byte of every block, and a block that is the second byte of every block, and so on.
+7. Solve each block as if it was single-character XOR. You already have code to do this.
+8. For each block, the single-byte XOR key that produces the best looking histogram is the repeating-key XOR key byte for that block. Put them together and you have the key.
+
+This code is going to turn out to be surprisingly useful later on. Breaking repeating-key XOR ("Vigenere") statistically is obviously an academic exercise, a "Crypto 101" thing. But more people "know how" to break it than can _actually break it_, and a similar technique breaks something much more important.
+
+> **No, that's not a mistake.**  
+> We get more tech support questions for this challenge than any of the other ones. We promise, there aren't any blatant errors in this text. In particular: the "wokka wokka!!!" edit distance really is 37.
+
+## `Challenge 7` AES in ECB mode
+
+The Base64-encoded content [in this file](https://cryptopals.com/static/challenge-data/7.txt) has been encrypted via AES-128 in ECB mode under the key
+
+```
+"YELLOW SUBMARINE".
+```
+
+(case-sensitive, without the quotes; exactly 16 characters; I like "YELLOW SUBMARINE" because it's exactly 16 bytes long, and now you do too).
+
+Decrypt it. You know the key, after all.
+
+Easiest way: use OpenSSL::Cipher and give it AES-128-ECB as the cipher.
+
+> **<u>Do this with code.</u>**  
+> You can obviously decrypt this using the OpenSSL command-line tool, but we're having you get ECB working in code for a reason. You'll need it _a lot_ later on, and not just for attacking ECB.
