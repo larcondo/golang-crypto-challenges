@@ -1,6 +1,6 @@
 package set1_challenges
 
-func repeatingKeyXOR(text string, key string) []byte {
+func RepeatingKeyXOR(text string, key string) []byte {
 
 	var j int
 	var resultado []byte

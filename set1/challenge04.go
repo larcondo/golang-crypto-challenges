@@ -41,7 +41,7 @@ func mostRepeatedChar(msg []byte) []byte {
 	return keys
 }
 
-func detectSingleCharXOR() []string {
+func DetectSingleCharXOR() []string {
 	probable := []byte("etaoin shrdlu")
 	// probable := []byte("ETAOIN SHRDLU")
 	fileContent, err := readFile("./4.txt")
@@ -62,7 +62,7 @@ func detectSingleCharXOR() []string {
 
 		for i := range probable {
 			clave := charOrder[0] ^ probable[i]
-			output := singleByteXORDecypher(decode, clave)
+			output := SingleByteXORDecypher(decode, clave)
 			msg := strings.ReplaceAll(output, "\n", "")
 			if isValidMessage(msg) {
 				fmt.Println("Mensaje encontrado:", msg)

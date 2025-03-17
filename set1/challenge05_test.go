@@ -20,7 +20,7 @@ I go crazy when I hear a cymbal`,
 		want: `0b3637272a2b2e63622c2e69692a23693a2a3c6324202d623d63343c2a26226324272765272a282b2f20430a652e2c652a3124333a653e2b2027630c692b20283165286326302e27282f`,
 	}
 
-	encrypted := repeatingKeyXOR(test5.text, test5.key)
+	encrypted := RepeatingKeyXOR(test5.text, test5.key)
 
 	encoded := hex.EncodeToString(encrypted)
 
@@ -28,4 +28,8 @@ I go crazy when I hear a cymbal`,
 		t.Fatalf("Result: %v\nWant: %v", encoded, test5.want)
 	}
 
+	decrypted := RepeatingKeyXOR(string(encrypted), test5.key)
+	if string(decrypted) != test5.text {
+		t.Fatalf("Reverse decryption does not work")
+	}
 }

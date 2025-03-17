@@ -31,7 +31,7 @@ func TestSingleWithKey(t *testing.T) {
 		t.Fatalf("Error on decode input")
 	}
 
-	msg := singleByteXORDecypher(decoded, key[0])
+	msg := SingleByteXORDecypher(decoded, key[0])
 	fmt.Println(msg)
 }
 
@@ -45,7 +45,7 @@ func TestBestKey(t *testing.T) {
 
 	key := BestKey(decoded)
 
-	resultado := singleByteXORDecypher(decoded, key)
+	resultado := SingleByteXORDecypher(decoded, key)
 	if resultado == "" {
 		t.Fatal("No se obtuvo el resultado")
 	} else {

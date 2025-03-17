@@ -3,7 +3,7 @@ package set1_challenges
 import "errors"
 
 // challenge 2 - Fixed XOR
-func fixedXOR(in1 []byte, in2 []byte) ([]byte, error) {
+func FixedXOR(in1 []byte, in2 []byte) ([]byte, error) {
 	var result []byte
 
 	if len(in1) != len(in2) {

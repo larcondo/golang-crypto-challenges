@@ -7,7 +7,7 @@ import (
 
 func TestDetectSingleCharXOR(t *testing.T) {
 
-	msgs := detectSingleCharXOR()
+	msgs := DetectSingleCharXOR()
 
 	fmt.Println(msgs)
 

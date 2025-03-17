@@ -21,7 +21,7 @@ func TestFixedXOR(t *testing.T) {
 		t.Fatalf("Error on decoding input2")
 	}
 
-	output, err := fixedXOR(input1, input2)
+	output, err := FixedXOR(input1, input2)
 	if err != nil {
 		t.Fatalf("Error on calculate XOR: %s", err)
 	}

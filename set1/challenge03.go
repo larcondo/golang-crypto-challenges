@@ -7,7 +7,7 @@ import (
 )
 
 // challenge 3 - Single-byte XOR cipher
-func singleByteXORDecypher(cipherText []byte, key byte) string {
+func SingleByteXORDecypher(cipherText []byte, key byte) string {
 	var result []byte
 
 	for i := range cipherText {
@@ -17,7 +17,7 @@ func singleByteXORDecypher(cipherText []byte, key byte) string {
 	return string(result)
 }
 
-func rankByteAppearance(cipherText []byte) []byte {
+func RankByteAppearance(cipherText []byte) []byte {
 	list := make(map[byte]int)
 
 	// create list of character appareance
@@ -41,12 +41,12 @@ func DecypherText(cipherText []byte) string {
 	// probable := []byte("ETAOIN SHRDLU")
 	probable := []byte("etaoin shrdlu")
 
-	keys := rankByteAppearance(cipherText)
+	keys := RankByteAppearance(cipherText)
 
 	for i := range probable {
 		// keys[1] se repite 2 veces en los primeros valores
 		clave := keys[0] ^ probable[i]
-		output := singleByteXORDecypher(cipherText, clave)
+		output := SingleByteXORDecypher(cipherText, clave)
 		if isValidMessage(output) {
 			fmt.Println("Letra:", string(probable[i]), "Clave:", clave, "(", string(clave), ")", " -> Mensaje:", output)
 			return output
@@ -89,7 +89,7 @@ func isValidChar(s string) bool {
 	return regexp.MustCompile("^[a-zA-Z ]$").MatchString(s)
 }
 
-func rankString(text []byte) float64 {
+func RankString(text []byte) float64 {
 	points := 0.0
 
 	for i := range text {
@@ -118,8 +118,8 @@ func BestKey(cipherText []byte) byte {
 	best := keyInfo{key: byte(0), points: 0.0}
 
 	for i := range possibleKeys {
-		dText := singleByteXORDecypher(cipherText, possibleKeys[i])
-		currentPoints := rankString([]byte(dText))
+		dText := SingleByteXORDecypher(cipherText, possibleKeys[i])
+		currentPoints := RankString([]byte(dText))
 		if currentPoints > best.points {
 			best.key = possibleKeys[i]
 			best.points = currentPoints

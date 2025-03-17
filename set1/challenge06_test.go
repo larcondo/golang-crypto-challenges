@@ -78,7 +78,7 @@ func TestGetBestKeySize(t *testing.T) {
 	STANZA := `Burning 'em, if you ain't quick and nimble
 I go crazy when I hear a cymbal`
 
-	encrypted := repeatingKeyXOR(STANZA, KEY)
+	encrypted := RepeatingKeyXOR(STANZA, KEY)
 
 	keysize, err := GetBestKeySize(encrypted)
 	if err != nil {
@@ -95,7 +95,7 @@ func TestGetCompleteKey(t *testing.T) {
 	testText := `Burning 'em, if you ain't quick and nimble
 I go crazy when I hear a cymbal`
 
-	encrypted := repeatingKeyXOR(testText, testKey)
+	encrypted := RepeatingKeyXOR(testText, testKey)
 
 	keysize, err := GetBestKeySize(encrypted)
 	ResolveErr(t, err)
@@ -123,7 +123,7 @@ func TestBreakRepeatingKeyXOR(t *testing.T) {
 
 	key := GetCompleteKey(ciphertext, keysize)
 
-	decrypted := repeatingKeyXOR(string(ciphertext), string(key))
+	decrypted := RepeatingKeyXOR(string(ciphertext), string(key))
 
 	fmt.Println("Best Key Size:", keysize)
 	fmt.Println(string(key))
