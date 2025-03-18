@@ -13,6 +13,11 @@
 - [Challenge 5 - Implement repeating-key XOR](#challenge-5-implement-repeating-key-xor)
 - [Challenge 6 - Break repeating-key XOR](#challenge-6-break-repeating-key-xor)
 - [Challenge 7 - AES in ECB mode](#challenge-7-aes-in-ecb-mode)
+- [Challenge 8 - Detect AES in ECB mode](#challenge-8-detect-aes-in-ecb-mode)
+
+### Set 2:
+
+- [Challenge 9 - Implement PKCS#7 padding](#challenge-9-implement-pkcs7-padding)
 
 # Set 1
 
@@ -157,3 +162,23 @@ One of them has been encrypted with ECB.
 Detect it.
 
 Remember that the problem with ECB is that it is stateless and deterministic; the same 16 byte plaintext block will always produce the same 16 byte ciphertext.
+
+# Set 2
+
+## `Challenge 9` Implement PKCS#7 padding
+
+A block cipher transforms a fixed-sized block (usually 8 or 16 bytes) of plaintext into ciphertext. But we almost never want to transform a single block; we encrypt irregularly-sized messages.
+
+One way we account for irregularly-sized messages is by padding, creating a plaintext that is an even multiple of the blocksize. The most popular padding scheme is called PKCS#7.
+
+So: pad any block to a specific block length, by appending the number of bytes of padding to the end of the block. For instance,
+
+```
+"YELLOW SUBMARINE"
+```
+
+...padded to 20 bytes would be:
+
+```
+"YELLOW SUBMARINE\x04\x04\x04\x04"
+```
